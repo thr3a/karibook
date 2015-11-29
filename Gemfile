@@ -46,3 +46,4 @@ group :development do
 end
 gem "twitter-bootstrap-rails"
 gem "slim-rails"
+gem 'mysql2', '~> 0.3.20'
