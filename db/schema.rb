@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128134630) do
+ActiveRecord::Schema.define(version: 20151129125445) do
 
   create_table "books", primary_key: "isbn", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20151128134630) do
     t.string   "published_date", limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "kashidashis", force: :cascade do |t|
+    t.string   "isbn",       limit: 255
+    t.string   "user_id",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "users", id: false, force: :cascade do |t|
+    t.string   "id",         limit: 255, null: false
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
