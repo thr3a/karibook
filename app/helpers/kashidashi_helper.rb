@@ -1,2 +1,0 @@
-module KashidashiHelper
-end

@@ -1,2 +1,0 @@
-class KashidashiController < ApplicationController
-end
