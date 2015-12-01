@@ -1,4 +1,5 @@
-= bootstrap_form_for(@user) do |f|
+= bootstrap_form_for(@user, inline_errors: false) do |f|
+  = f.alert_message "エラーが発生しました。以下を修正してください"
   = f.text_field :id
   = f.text_field :name
   = f.submit "登録"
