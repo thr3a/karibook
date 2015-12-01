@@ -1,0 +1,38 @@
+h2 ユーザー
+table.table
+  thead
+    tr
+      th 学籍番号
+      th 氏名
+      th
+      th
+
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.id
+        td = user.name
+        td = link_to '編集', edit_user_path(user)
+        td = link_to '削除', user, data: {:confirm => '本当に削除しますか？'}, method: :delete
+h2 本
+table.table
+  thead
+    tr
+      th ISBN
+      th 名前
+      th 著者名
+      th 出版日
+      th 出版社
+      th
+      th
+
+  tbody
+    - @books.each do |book|
+      tr
+        td = book.isbn
+        td = book.name
+        td = book.author
+        td = book.published_date
+        td = book.publisher
+        td = link_to '編集', edit_book_path(book)
+        td = link_to '削除', book, data: {:confirm => '本当に削除しますか？'}, method: :delete
