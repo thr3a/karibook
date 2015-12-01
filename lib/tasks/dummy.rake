@@ -33,16 +33,16 @@ namespace :dummy do
       published_date: "2004/12/7"
     )
     User.create(
-      id: "10jk001@ms.dendai.ac.jp",
+      id: "10jk001",
       name: "電大太郎"
     )
     User.create(
-      id: "10jk002@ms.dendai.ac.jp",
+      id: "10jk002",
       name: "電大花子"
     )
     Kashidashi.create(
       isbn: "9784797372274",
-      user_id: "10jk001@ms.dendai.ac.jp"
+      user_id: "10jk001"
     )
   end
 
