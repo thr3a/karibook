@@ -6,5 +6,6 @@ class CreateUsers < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    execute "ALTER TABLE users ADD PRIMARY KEY (id);"
   end
 end
