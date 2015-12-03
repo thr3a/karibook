@@ -2,6 +2,22 @@ p = "カレントユーザー:#{session[:current_user]}"
 = bootstrap_form_tag(url: "/login")  do |f|
   = f.text_field :name
   = f.submit 'ログイン'
+h2 ApplicationController
+table.table
+  thead
+    tr
+      th 書籍名
+      th 借りた日時
+      th
+
+  tbody
+    - Kashidashi.where(user_id: session[:current_user]).each do |kari|
+      tr
+        td = kari.book.name
+        td = kari.created_at
+        td = button_to "返却", kaesu_path(id: kari.id),data: {:confirm => "#{kari.book.name}の貸出処理を行いますがよろしいですか？"}
+
+  
 h2 ユーザー
 table.table
   thead

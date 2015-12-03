@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get 'kariru' => 'kashidasis#kariru'
   post 'kariru' => 'kashidasis#kariru'
   post 'login' => 'users#login'
-
+  get 'kaesu' => 'kashidasis#kaesu'
+  post 'kaesu' => 'kashidasis#kaesu'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

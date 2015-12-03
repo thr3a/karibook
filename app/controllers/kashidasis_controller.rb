@@ -5,14 +5,11 @@ class KashidasisController < ApplicationController
     @kashidasis = Kashidashi.all
   end
   def kariru
-    isbn = params[:isbn]
-    user_id = params[:user_id]
     if request.get?
       @kari = Kashidashi.new(kashidashi_params)
-      render :confirm
+      render :kariru
     else
       @kari = Kashidashi.new(kashidashi_params)
-      p kashidashi_params
       if @kari.save
         redirect_to root_path, notice: '貸出に成功しました'
       else
@@ -21,8 +18,17 @@ class KashidasisController < ApplicationController
     end
   end
   def kaesu
-    @kari = Kashidashi.find(params[:id]).destroy
-    render json: {status: 200, message: "返しました"}
+    if request.get?
+      @kari = Kashidashi.find_by(isbn: params[:isbn], user_id: params[:user_id])
+      if @kari.nil?
+        redirect_to root_path, alert: 'この本は返却できません'
+      else
+        render :kaesu
+      end
+    else
+      @kari = Kashidashi.find(params[:id]).destroy
+      redirect_to root_path, notice: '返却しました'
+    end
   end
   private
     # Only allow a trusted parameter "white list" through.
