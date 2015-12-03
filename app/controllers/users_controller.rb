@@ -33,6 +33,11 @@ class UsersController < ApplicationController
     redirect_to root_path, notice: '削除に成功しました'
   end
 
+  # POST /users/login
+  def login
+    session[:current_user] = params[:name]
+    redirect_to root_path, notice: 'ログインしました'
+  end
   private
     # Only allow a trusted parameter "white list" through.
     def user_params

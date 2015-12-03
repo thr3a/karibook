@@ -1,0 +1,12 @@
+h3 確認
+- if @kari.valid?
+  p 以下の本の貸出処理を行います。よろしいですか？
+  .well.well-sm = @kari.book.name
+  = bootstrap_form_tag url: '/kariru' do |f|
+    = f.hidden_field :isbn, value: @kari.isbn
+    = f.hidden_field :user_id, value: @kari.user_id
+    = f.submit "借りる"
+- else
+  .alert.alert-danger
+    - @kari.errors.full_messages.each do |e|
+      p = e

@@ -1,3 +1,7 @@
+p = "カレントユーザー:#{session[:current_user]}"
+= bootstrap_form_tag(url: "/login")  do |f|
+  = f.text_field :name
+  = f.submit 'ログイン'
 h2 ユーザー
 table.table
   thead
@@ -25,6 +29,7 @@ table.table
       th 出版社
       th
       th
+      th
 
   tbody
     - @books.each do |book|
@@ -36,3 +41,4 @@ table.table
         td = book.publisher
         td = link_to '編集', edit_book_path(book)
         td = link_to '削除', book, data: {:confirm => '本当に削除しますか？'}, method: :delete
+        td = button_to "借りる", kariru_path(isbn: book.isbn, user_id: session[:current_user]),data: {:confirm => "#{book.name}の貸出処理を行いますがよろしいですか？"}
