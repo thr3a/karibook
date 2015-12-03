@@ -48,3 +48,4 @@ gem "twitter-bootstrap-rails"
 gem "slim-rails"
 gem 'mysql2', '~> 0.3.20'
 gem 'bootstrap_form'
+gem 'amazon-ecs'
