@@ -4,6 +4,9 @@ class BooksController < ApplicationController
   # GET /books
   def new
     @book = Book.new
+    if params[:isbn].present?
+      @preset_data = get_book_info_from_isbn(params[:isbn]).to_json
+    end
   end
 
   # POST /books
@@ -41,5 +44,25 @@ class BooksController < ApplicationController
 
     def set_book
       @book = Book.find(params[:id])
+    end
+
+    def get_book_info_from_isbn isbn
+      res = Amazon::Ecs.item_search(
+        isbn,
+        search_index: 'Books',
+        response_group: 'Medium',
+        country: 'jp'
+      )
+      if res.first_item.nil?
+        return false
+      else
+        return{
+          isbn: isbn,
+          name: res.first_item.get('ItemAttributes/Title'),
+          author: res.first_item.get('ItemAttributes/Author'),
+          publisher: res.first_item.get('ItemAttributes/Manufacturer'),
+          published_date: res.first_item.get('ItemAttributes/PublicationDate')
+        }
+      end
     end
 end
