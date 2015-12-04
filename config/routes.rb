@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   root 'kashidasis#index'
   resources :books , except: :show
-  resources :users , except: :show
+  resources :users , except: [:show, :edit, :update]
 
   get 'kariru' => 'kashidasis#kariru'
   post 'kariru' => 'kashidasis#kariru'
   post 'login' => 'users#login'
+  post 'logout' => 'users#logout'
   get 'kaesu' => 'kashidasis#kaesu'
   post 'kaesu' => 'kashidasis#kaesu'
   # The priority is based upon order of creation: first created -> highest priority.
