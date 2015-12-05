@@ -42,21 +42,6 @@ class UsersController < ApplicationController
     redirect_to root_path, notice: '削除に成功しました'
   end
 
-  # POST /login
-  def login
-    if(params[:user_id].present? && User.find_by(id: params[:user_id]))
-      session[:current_user] = params[:user_id]
-      redirect_to root_path, notice: 'ログインしました'
-    else
-      redirect_to root_path, alert: '存在しないIDです'
-    end
-  end
-
-  # POST /logout
-  def logout
-    reset_session
-    redirect_to root_path, notice: 'ログアウトしました'
-  end
   private
     # Only allow a trusted parameter "white list" through.
     def user_params
