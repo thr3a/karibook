@@ -2,6 +2,15 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /users
+  def index
+    if session[:current_user]
+      @users = User.all
+    else
+      redirect_to root_path, alert: 'まずはログインしてください'
+    end
+  end
+
+  # GET /users/new
   def new
     @user = User.new
   end

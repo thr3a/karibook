@@ -1,0 +1,24 @@
+= bootstrap_form_tag url: root_path, layout: :inline, method: :get do |f|
+  = f.text_field :keyword, label:"検索ワード"
+  = f.submit "検索"
+
+table.table
+  thead
+    tr
+      th 名前
+      th 著者名
+      th
+      th
+
+  tbody
+    - @books.each do |book|
+      tr
+        td = book.name
+        td = book.author
+        - if book.kashidashi.nil?
+          td = button_to "借りる", kariru_path(isbn: book.isbn),{data: {confirm: "「#{book.name}」の貸出処理を行いますがよろしいですか？"},class: 'btn btn-info'}
+        - else
+          td = button_to "貸出中", kariru_path(isbn: nil),{disabled:true,class: 'btn btn-danger'}
+        td
+          =link_to '編集', edit_book_path(book), class: 'btn btn-default'
+          =link_to '削除', book, data: {:confirm => '本当に削除しますか？'}, method: :delete, class: 'btn btn-default'

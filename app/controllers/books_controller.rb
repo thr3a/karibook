@@ -2,6 +2,14 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:edit, :update, :destroy]
 
   # GET /books
+  def index
+    if session[:current_user]
+      @books = Book.all
+    else
+      redirect_to root_path, alert: 'まずはログインしてください'
+    end
+  end
+  # GET /books
   def new
     @book = Book.new
     if params[:isbn].present?
