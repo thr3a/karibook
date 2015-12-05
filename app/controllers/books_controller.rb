@@ -4,7 +4,12 @@ class BooksController < ApplicationController
   # GET /books
   def index
     if session[:current_user]
-      @books = Book.all.paginate(page: params[:page], per_page: 10)
+      if params[:keyword].present?
+        @books = Book.where("name like '%" + params[:keyword] + "%'")
+      else
+        @books = Book.all
+      end
+      @books = @books.paginate(page: params[:page], per_page: 10)
     else
       redirect_to root_path, alert: 'まずはログインしてください'
     end

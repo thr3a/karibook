@@ -1,5 +1,5 @@
-= bootstrap_form_tag url: root_path, layout: :inline, method: :get do |f|
-  = f.text_field :keyword, label:"検索ワード"
+= bootstrap_form_tag url: books_path, layout: :inline, method: :get do |f|
+  = f.text_field :keyword, label:"検索ワード", value: params[:keyword]
   = f.submit "検索"
 
 table.table
