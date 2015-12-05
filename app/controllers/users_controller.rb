@@ -15,17 +15,17 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  # # GET /users/:id/edit
-  # def edit
-  # end
-  # # PATCH/PUT /users/:id
-  # def update
-  #   if @user.update(user_params)
-  #     redirect_to root_path, notice: '編集に成功しました'
-  #   else
-  #     render :edit
-  #   end
-  # end
+  # GET /users/:id/edit
+  def edit
+  end
+  # PATCH/PUT /users/:id
+  def update
+    if @user.update(user_params)
+      redirect_to root_path, notice: '編集に成功しました'
+    else
+      render :edit
+    end
+  end
 
   # DELETE /users/:isbn
   def destroy

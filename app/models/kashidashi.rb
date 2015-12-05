@@ -11,7 +11,7 @@ class Kashidashi < ActiveRecord::Base
     b = Book.find_by(isbn: isbn)
     if b.nil?
       errors.add(:isbn, "は登録されていない本です")
-    elsif b.kashidashi.present?
+    elsif(b.kashidashi.present? && b.kashidashi.user_id != user_id)
       errors.add(:isbn, "は誰かが既に借りている本です")
     end
   end

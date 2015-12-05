@@ -1,16 +1,10 @@
-- if !is_login?
-  p 
-    | ログインを行ってください　
-    =link_to '新規登録', new_user_path
-  = bootstrap_form_tag(url: "/login", layout: :inline)  do |f|
-    = f.text_field :user_id, label: "学籍番号"
-    = f.submit 'ログイン', class: 'btn btn-info'
+- if session[:current_user].blank?
+  =link_to 'Slackでログイン', '/auth/slack', class:'btn btn-default'
 - else
-  - current_user = session[:current_user]
   h3
-    code = current_user
+    code = "#{session[:current_user]['nickname']}(#{session[:current_user]['name']})"
     | でログイン中
-  = button_to "ログアウト", logout_path, class: 'btn btn-default'
+  = link_to "ログアウト", auth_signout_path, class: 'btn btn-default'
   
   h1 あなたが借りている本
   table.table
@@ -19,9 +13,9 @@
         th 書籍名
         th 借りた日時
         th
-
+  
     tbody
-      - Kashidashi.where(user_id: current_user).each do |kari|
+      - Kashidashi.where(user_id: session[:current_user]['nickname']).each do |kari|
         tr
           td = kari.book.name
           td = kari.created_at.to_s(:date)
@@ -35,39 +29,37 @@
   table.table
     thead
       tr
-        th 状態
         th 名前
         th 著者名
         th
         th
-        / th
-
+  
     tbody
       - @books.each do |book|
         tr
-          - if book.kashidashi.nil?
-            td
-              span.label.label-primary 貸出可
-          - else
-            td
-              span.label.label-danger 貸出中
           td = book.name
           td = book.author
-          td = button_to "借りる", kariru_path(isbn: book.isbn, user_id: current_user),data: {:confirm => "「#{book.name}」の貸出処理を行いますがよろしいですか？"}, class: 'btn btn-info'
-          td = link_to '編集', edit_book_path(book), class: 'btn btn-default'
-          / td = link_to '削除', book, data: {:confirm => '本当に削除しますか？'}, method: :delete
+          - if book.kashidashi.nil?
+            td = button_to "借りる", kariru_path(isbn: book.isbn),{data: {confirm: "「#{book.name}」の貸出処理を行いますがよろしいですか？"},class: 'btn btn-info'}
+          - else
+            td = button_to "貸出中", kariru_path(isbn: nil),{disabled:true,class: 'btn btn-danger'}
+          td
+            =link_to '編集', edit_book_path(book), class: 'btn btn-default'
+            =link_to '削除', book, data: {:confirm => '本当に削除しますか？'}, method: :delete, class: 'btn btn-default'
   
   h1 ユーザー
   table.table
     thead
       tr
-        th 学籍番号
-        th 氏名
+        th ID
+        th なまえ
         th
-
+        th
+  
     tbody
       - @users.each do |user|
         tr
           td = user.id
           td = user.name
+          td = link_to '編集', edit_user_path(user), class: 'btn btn-default'
           td = link_to '削除', user, data: {:confirm => '本当に削除しますか？'}, method: :delete

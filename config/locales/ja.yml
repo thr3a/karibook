@@ -13,10 +13,10 @@ ja:
         publisher: 出版社
         published_date: 出版日
       user:
-        name: 氏名
-        id: 学籍番号
+        name: なまえ
+        id: ID
       kashidashi:
-        user_id: 学籍番号
+        user_id: ユーザーID
         isbn: ISBN
   date:
     abbr_day_names:

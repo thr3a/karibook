@@ -9,29 +9,40 @@ class KashidasisController < ApplicationController
     end
   end
   def kariru
-    if request.get?
-      @kari = Kashidashi.new(kashidashi_params)
-      render :kariru
-    else
-      @kari = Kashidashi.new(kashidashi_params)
-      if @kari.save
-        redirect_to root_path, notice: '貸出に成功しました'
+    if session[:current_user]
+      if request.get?
+        @kari = Kashidashi.new(kashidashi_params)
+        @kari.user_id = session[:current_user]['nickname']
+        render :kariru
       else
-        redirect_to root_path, alert: '貸出に失敗しました<br>'+@kari.errors.full_messages.join("<br>")
+        @kari = Kashidashi.new(kashidashi_params)
+        @kari.user_id = session[:current_user]['nickname']
+        if @kari.save
+          redirect_to root_path, notice: '貸出に成功しました'
+        else
+          redirect_to root_path, alert: '貸出に失敗しました<br>'+@kari.errors.full_messages.join("<br>")
+        end
       end
+    else
+      redirect_to root_path, notice: '先にログインを行ってください'
     end
+
   end
   def kaesu
-    if request.get?
-      @kari = Kashidashi.find_by(isbn: params[:isbn], user_id: params[:user_id])
-      if @kari.nil?
-        redirect_to root_path, alert: 'この本は返却できません'
+    if session[:current_user]
+      if request.get?
+        @kari = Kashidashi.find_by(isbn: params[:isbn])
+        if @kari.nil?
+          redirect_to root_path, alert: 'この本は返却できません'
+        else
+          render :kaesu
+        end
       else
-        render :kaesu
+        @kari = Kashidashi.find(params[:id]).destroy
+        redirect_to root_path, notice: '返却しました'
       end
     else
-      @kari = Kashidashi.find(params[:id]).destroy
-      redirect_to root_path, notice: '返却しました'
+      redirect_to root_path, notice: '先にログインを行ってください'
     end
   end
   private
