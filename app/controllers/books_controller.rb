@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   # GET /books
   def index
     if session[:current_user]
-      @books = Book.all
+      @books = Book.all.paginate(page: params[:page], per_page: 10)
     else
       redirect_to root_path, alert: 'まずはログインしてください'
     end
