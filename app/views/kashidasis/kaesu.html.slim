@@ -4,7 +4,7 @@ h3 確認
   .well.well-sm = @kari.book.name
   = bootstrap_form_tag url: '/kaesu' do |f|
     = f.hidden_field :id, value: @kari.id
-    = f.submit "返す"
+    = f.submit "返す", data: { disable_with: "処理中" }, class: 'btn btn-info'
 - else
   .alert.alert-danger
     - @kari.errors.full_messages.each do |e|

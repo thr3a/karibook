@@ -5,7 +5,7 @@ h3 確認
   = bootstrap_form_tag url: '/kariru' do |f|
     = f.hidden_field :isbn, value: @kari.isbn
     = f.hidden_field :user_id, value: @kari.user_id
-    = f.submit "借りる"
+    = f.submit "借りる", data: { disable_with: "処理中" }, class: 'btn btn-info'
 - else
   .alert.alert-danger
     - @kari.errors.full_messages.each do |e|
