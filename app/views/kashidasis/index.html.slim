@@ -1,13 +1,17 @@
 - if session[:current_user].blank?
   =link_to 'Slackでログイン', '/auth/slack', class:'btn btn-default'
 - else
-  h3
-    code = "#{session[:current_user]['nickname']}(#{session[:current_user]['name']})"
+  p
+    code = "@#{session[:current_user]['nickname']}(#{session[:current_user]['name']})"
     | でログイン中
-  = link_to "ログアウト", auth_signout_path, class: 'btn btn-default'
-  ul
-    li = link_to "ユーザ一覧", '/users'
-    li = link_to "書籍一覧", '/books'
+    = link_to "ログアウト", auth_signout_path, class: 'btn btn-default'
+  .ul.list-inline
+    label ユーザー
+    = link_to "一覧", users_path, class: 'btn btn-default'
+  .ul.list-inline
+    label 書籍
+    = link_to "一覧", books_path, class: 'btn btn-default'
+    = link_to "新規登録", new_book_path, class: 'btn btn-default'
   h1 あなたが借りている本
   table.table
     thead
