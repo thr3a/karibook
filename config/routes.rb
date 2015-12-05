@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'kashidasis#index'
   resources :books , except: :show
-  resources :users , except: :show
+  resources :users , except: [:show, :new, :edit]
 
   get 'kariru' => 'kashidasis#kariru'
   post 'kariru' => 'kashidasis#kariru'
