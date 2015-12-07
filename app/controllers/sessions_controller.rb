@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
     def create
         data = request.env['omniauth.auth'].info
         # 指定されたチーム内にいるかどうか
-        if data['team'] == 'ymklab'
+        if data['team'] == Rails.application.secrets.slack_team
           User.create(id: data['nickname'], name: data['name'])
           session[:current_user] = data
           redirect_to root_path, notice: 'ログインしました'
