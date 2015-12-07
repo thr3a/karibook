@@ -1,9 +1,9 @@
 = render "form"
 javascript:
   $(function(){
+    // パラメータにISBNがあって書籍情報を得られたら自動補完
     var data = #{raw @preset_data};
     if(data){
-      console.log(data);
       $("#book_isbn").val(data.isbn);
       $("#book_name").val(data.name);
       $("#book_published_date").val(data.published_date);
