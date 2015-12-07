@@ -26,7 +26,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     if @book.save
-      redirect_to root_path, notice: '登録に成功しました'
+      redirect_to books_path, notice: '登録に成功しました'
     else
       render :new
     end
@@ -37,7 +37,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/:isbn
   def update
     if @book.update(book_params)
-      redirect_to root_path, notice: '編集に成功しました'
+      redirect_to books_path, notice: '編集に成功しました'
     else
       render :edit
     end
