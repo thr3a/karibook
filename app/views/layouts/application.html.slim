@@ -7,8 +7,25 @@ html
     = javascript_include_tag "application", 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
+    nav.navbar.navbar-default.navbar-static-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed type='button' data-toggle='collapse' data-target='#menu'
+            span.sr-only Toggle Navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          = link_to '書籍管理', root_path, class: 'navbar-brand'
+        #menu.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              = link_to "書籍リスト", books_path
+            li
+              = link_to "書籍新規登録", new_book_path
+            li
+              = link_to "ユーザーリスト", users_path
+
   .container
-    h1 = link_to '書籍管理', root_path
     - if flash[:notice]
       .alert.alert-success = flash[:notice]
     - if flash[:alert]
