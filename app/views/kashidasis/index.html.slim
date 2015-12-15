@@ -18,7 +18,7 @@
         - Kashidashi.where(user_id: session[:current_user]['nickname']).each do |kari|
           tr
             td = kari.book.name
-            td = kari.created_at.to_s(:date)
+            td = "#{kari.created_at.to_s(:date)}(#{time_ago_in_words kari.created_at}前)"
             td = button_to "返却", kaesu_path(id: kari.id),data: {:confirm => "「#{kari.book.name}」の返却処理を行いますがよろしいですか？"}, class: 'btn btn-warning'
   - else
     p 現在借りている本は無いです
