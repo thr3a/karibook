@@ -5,9 +5,9 @@ class BooksController < ApplicationController
   def index
     if session[:current_user]
       if params[:keyword].present?
-        @books = Book.where("name like '%" + params[:keyword] + "%'")
+        @books = Book.includes(:kashidashi).where("name like '%" + params[:keyword] + "%'")
       else
-        @books = Book.all
+        @books = Book.includes(:kashidashi).all
       end
       @books = @books.paginate(page: params[:page], per_page: 10)
     else
