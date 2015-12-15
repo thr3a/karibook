@@ -60,15 +60,17 @@ class BooksController < ApplicationController
     end
 
     def get_book_info_from_isbn isbn
-      res = Amazon::Ecs.item_search(
-        isbn,
-        search_index: 'Books',
-        response_group: 'Medium',
-        country: 'jp'
-      )
-      if res.first_item.nil?
-        return false
+      begin
+        res = Amazon::Ecs.item_search(
+          isbn,
+          search_index: 'Books',
+          response_group: 'Medium',
+          country: 'jp'
+        )
+      rescue => e
+         @book.errors.add(:isbn, "アマゾンの検索APIでエラーが発生しました。KEYが正しく設定されているか確認してください")
       else
+        return false if res.first_item.nil?
         return{
           isbn: isbn,
           name: res.first_item.get('ItemAttributes/Title'),
