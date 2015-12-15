@@ -3,16 +3,12 @@ class BooksController < ApplicationController
 
   # GET /books
   def index
-    if session[:current_user]
-      if params[:keyword].present?
-        @books = Book.includes(:kashidashi).where("name like '%" + params[:keyword] + "%'")
-      else
-        @books = Book.includes(:kashidashi).all
-      end
-      @books = @books.paginate(page: params[:page], per_page: 10)
+    if params[:keyword].present?
+      @books = Book.includes(:kashidashi).where("name like '%" + params[:keyword] + "%'")
     else
-      redirect_to root_path, alert: 'まずはログインしてください'
+      @books = Book.includes(:kashidashi).all
     end
+    @books = @books.paginate(page: params[:page], per_page: 10)
   end
   # GET /books
   def new
