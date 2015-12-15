@@ -6,16 +6,19 @@
     | でログイン中
     = link_to "ログアウト", auth_signout_path, class: 'btn btn-default'
   h1 あなたが借りている本
-  table.table
-    thead
-      tr
-        th 書籍名
-        th 借りた日時
-        th
-  
-    tbody
-      - Kashidashi.where(user_id: session[:current_user]['nickname']).each do |kari|
+  - if @books.present?
+    table.table
+      thead
         tr
-          td = kari.book.name
-          td = kari.created_at.to_s(:date)
-          td = button_to "返却", kaesu_path(id: kari.id),data: {:confirm => "「#{kari.book.name}」の返却処理を行いますがよろしいですか？"}, class: 'btn btn-warning'
+          th 書籍名
+          th 借りた日時
+          th
+    
+      tbody
+        - Kashidashi.where(user_id: session[:current_user]['nickname']).each do |kari|
+          tr
+            td = kari.book.name
+            td = kari.created_at.to_s(:date)
+            td = button_to "返却", kaesu_path(id: kari.id),data: {:confirm => "「#{kari.book.name}」の返却処理を行いますがよろしいですか？"}, class: 'btn btn-warning'
+  - else
+    p 現在借りている本は無いです

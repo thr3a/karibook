@@ -1,13 +1,10 @@
 class KashidasisController < ApplicationController
   def index
-    @users = User.all
-    @kashidasis = Kashidashi.all
-    if params[:keyword].present?
-      @books = Book.where("name like '%" + params[:keyword] + "%'")
-    else
-      @books = Book.all
+    if session[:current_user]
+      @books = Kashidashi.where(user_id: session[:current_user]['nickname'])
     end
   end
+
   def kariru
     if session[:current_user]
       if request.get?
